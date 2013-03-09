@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  video_id: MyString
+  country: MyString
+  policy_id: 1
+
+two:
+  video_id: MyString
+  country: MyString
+  policy_id: 1

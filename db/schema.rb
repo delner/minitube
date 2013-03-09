@@ -11,6 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20130309202727) do
+
+  create_table "video_policies", :force => true do |t|
+    t.string   "video_id"
+    t.string   "country"
+    t.integer  "policy_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "video_policies", ["country", "policy_id"], :name => "country_policy"
+  add_index "video_policies", ["video_id", "country"], :name => "video_country"
+
+  create_table "videos", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end
