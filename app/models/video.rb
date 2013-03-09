@@ -6,8 +6,15 @@ class Video < ActiveRecord::Base
 
   has_many :video_policies
 
+  def self.hash_key id
+    ("Video-ID:" + id)
+  end
+  def hash_key
+    Video.hash_key self.id
+  end
+
   def policy_for_country country
-    Rails.cache.fetch (self.id + "/" + country) do
+    Rails.cache.fetch (VideoPolicy.hash_key self.id, country) do
       VideoPolicy.where(:video_id => self.id, :country => country)[0]
     end
   end

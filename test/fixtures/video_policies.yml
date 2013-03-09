@@ -1,11 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  video_id: MyString
-  country: MyString
+cat_video_us:
+  video_id: 1
+  country: US
   policy_id: 1
 
-two:
-  video_id: MyString
-  country: MyString
+cat_video_ca:
+  video_id: 1
+  country: CN
+  policy_id: 0
+
+football_highlights_video-us:
+  video_id: 2
+  country: US
+  policy_id: 2
+
+football_highlights_video_ca:
+  video_id: 2
+  country: CA
   policy_id: 1

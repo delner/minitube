@@ -1,7 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  title: MyString
+cat_video:
+  id: 1
+  title: Cat Video
 
-two:
-  title: MyString
+football_highlights_video:
+  id: 2
+  title: Football Highlights Reel
