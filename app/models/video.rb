@@ -8,10 +8,13 @@ class Video < ActiveRecord::Base
 
   # Queries
   def self.all_with_policies
+    # I'd like to use active record classes to build this data view out, but it was being inefficient
+    # and I couldn't figure out how to map the data the way I wanted. This works well, though.
     query = "SELECT videos.*, video_policies.country, video_policies.policy_id FROM `videos` INNER JOIN `video_policies` ON `video_policies`.`video_id` = `videos`.`id`"
     query_result = ActiveRecord::Base.connection.execute(query)
 
     result = {}
+    # Doesn't let me reference column names... we have to use column indexes.
     # 0 - video_id
     # 1 - title
     # 2 - date_created
