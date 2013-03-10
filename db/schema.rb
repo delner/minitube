@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130309202727) do
+ActiveRecord::Schema.define(:version => 20130310030545) do
 
-  create_table "video_policies", :force => true do |t|
-    t.string   "video_id"
-    t.string   "country"
+  create_table "video_policies", :id => false, :force => true do |t|
+    t.string   "video_id",   :default => "", :null => false
+    t.string   "country",    :default => "", :null => false
     t.integer  "policy_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   add_index "video_policies", ["country", "policy_id"], :name => "country_policy"

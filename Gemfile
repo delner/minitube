@@ -6,6 +6,7 @@ gem 'rails'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
+gem 'composite_primary_keys'
 gem 'activerecord-import'
 gem 'sanitize'
 

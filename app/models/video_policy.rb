@@ -1,5 +1,8 @@
+require 'composite_primary_keys'
+
 class VideoPolicy < ActiveRecord::Base
   after_save :delete_from_cache
+  self.primary_keys = :video_id, :country
 
   attr_accessible :country, :policy_id, :video_id
   belongs_to :video
@@ -33,7 +36,7 @@ class VideoPolicy < ActiveRecord::Base
   end
   def self.fetch video_id, country
     Rails.cache.fetch (VideoPolicy.hash_key video_id, country) do
-      VideoPolicy.where(:video_id => video_id, :country => country)[0]
+      VideoPolicy.find(:video_id => video_id, :country => country)
     end
   end
 end

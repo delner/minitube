@@ -44,6 +44,8 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
+    composite_primary_keys (5.0.12)
+      activerecord (~> 3.2.0, >= 3.2.9)
     debugger (1.4.0)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
@@ -164,6 +166,7 @@ DEPENDENCIES
   activerecord-import
   bootstrap-sass
   compass-rails
+  composite_primary_keys
   debugger
   fog
   haml-rails
