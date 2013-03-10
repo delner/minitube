@@ -1,8 +1,8 @@
-#require 'composite_primary_keys'
+require 'composite_primary_keys'
 
 class VideoPolicy < ActiveRecord::Base
   after_save :delete_from_cache
-  #self.primary_keys = :video_id, :country
+  self.primary_keys = :video_id, :country
 
   attr_accessible :country, :policy_id, :video_id
   belongs_to :video
