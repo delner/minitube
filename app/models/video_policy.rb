@@ -1,8 +1,8 @@
-require 'composite_primary_keys'
+#require 'composite_primary_keys'
 
 class VideoPolicy < ActiveRecord::Base
   after_save :delete_from_cache
-  self.primary_keys = :video_id, :country
+  #self.primary_keys = :video_id, :country
 
   attr_accessible :country, :policy_id, :video_id
   belongs_to :video
@@ -14,11 +14,11 @@ class VideoPolicy < ActiveRecord::Base
 
   # Queries
   def self.by_country_and_policy country, policy
-    VideoPolicy.where(:country => country, :policy_id => policy.id)
+    VideoPolicy.where(:country => country, :policy_id => policy.id).to_a
   end
 
   def self.available_in_country country
-    VideoPolicy.where('country = ? AND policy_id != ?', country, BlockPolicy.id)
+    VideoPolicy.where('country = ? AND policy_id != ?', country, BlockPolicy.id).to_a
   end
 
   # Caching
@@ -29,14 +29,14 @@ class VideoPolicy < ActiveRecord::Base
     VideoPolicy.hash_key self.video_id, self.country
   end
   def self.delete_from_cache video_id, country
-    Rails.cache.delete VideoPolicy.hash_key video_id, country
+    Caching.remote_cache.delete VideoPolicy.hash_key video_id, country
   end
   def delete_from_cache
     VideoPolicy.delete_from_cache self.video_id, self.country
   end
   def self.fetch video_id, country
-    Rails.cache.fetch (VideoPolicy.hash_key video_id, country) do
-      VideoPolicy.find(:video_id => video_id, :country => country)
+    Caching.remote_cache.fetch (VideoPolicy.hash_key video_id, country) do
+      VideoPolicy.find(video_id, country)
     end
   end
 end

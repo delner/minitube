@@ -19,13 +19,13 @@ class Video < ActiveRecord::Base
     Video.hash_key self.id
   end
   def self.delete_from_cache id
-    Rails.cache.delete Video.hash_key id
+    Caching.remote_cache.delete Video.hash_key id
   end
   def delete_from_cache
     Video.delete_from_cache self.id
   end
   def self.fetch id
-    Rails.cache.fetch (Video.hash_key id) do
+    Caching.remote_cache.fetch (Video.hash_key id) do
       Video.find(id)
     end
   end

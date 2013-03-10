@@ -1,20 +1,23 @@
 class PolicyController < ApplicationController
-  caches_action :index
+  caches_action :index, :cache_path => Proc.new {|controller| controller.params }
+  caches_action :available, :cache_path => Proc.new {|controller| controller.params }
 
   def index
-    @policies = VideoPolicy.all
+    # I want to page cache this, but Rails isn't playing nicely with JSON output...
+    # Use Memcached for now instead.
+    policies = VideoPolicy.all
     respond_to do |format|
       format.html
       format.json{
-        render :json => @policies.to_json
+        render :json => policies.to_json
       }
     end
   end
 
   def available
-    policies = Rails.cache.fetch ('policy#available-C:' + params[:country]) do
-      VideoPolicy.available_in_country(params[:country]).to_a
-    end
+    # I want to page cache this, but Rails isn't playing nicely with JSON output...
+    # Use Memcached for now instead.
+    policies = VideoPolicy.available_in_country(params[:country])
     respond_to do |format|
       format.html
       format.json{
@@ -34,7 +37,7 @@ class PolicyController < ApplicationController
   end
 
   def expire
-    expire_action :action => :index
     Rails.cache.clear
+    Caching.remote_cache.clear
   end
 end
