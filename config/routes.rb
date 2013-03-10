@@ -1,4 +1,10 @@
 Minitube::Application.routes.draw do
+
+  get "policies" => 'policy#index', :format => :json
+  get "policies/available/:country" => 'policy#available', :format => :json
+  get "policies/video/:video_id/country/:country" => 'policy#video', :format => :json
+  get "policies/expire" => 'policy#expire'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
