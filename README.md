@@ -31,3 +31,12 @@ There are 3 views included in the service:
  - `/policies`: Returns all policies for all videos in all regions.
  - `/policies/available/<country>`: Returns all policies for videos who are not blocked in the specified country. `country` is a case-sensitive ISO code (http://en.wikipedia.org/wiki/ISO_3166-1)
  - `/policies/video/<video_id>/country/<country>`: Returns the policy for a single video in a single region. `country` is the same as above. `video_id` is a 1-8 character ID potentially consisting of numbers, letters or symbols (case-sensitive.)
+
+See the demo:
+-------------
+The demo of this application is available at http://demo.davidelner.com
+
+Views:
+ - http://demo.davidelner.com/policies
+ - http://demo.davidelner.com/policies/available/US
+ - http://demo.davidelner.com/policies/video/15/country/US
