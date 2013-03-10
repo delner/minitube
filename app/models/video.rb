@@ -7,8 +7,44 @@ class Video < ActiveRecord::Base
   has_many :video_policies
 
   # Queries
+  def self.all_with_policies
+    query = "SELECT videos.*, video_policies.country, video_policies.policy_id FROM `videos` INNER JOIN `video_policies` ON `video_policies`.`video_id` = `videos`.`id`"
+    query_result = ActiveRecord::Base.connection.execute(query)
+
+    result = {}
+    # 0 - video_id
+    # 1 - title
+    # 2 - date_created
+    # 3 - date_updated
+    # 4 - country
+    # 5 - policy_id
+    query_result.each do |row|
+      if result[row[0]] == nil
+        # Add video
+        result[row[0]] = {}
+        result[row[0]]['id'] = row[0]
+        result[row[0]]['title'] = row[1]
+        result[row[0]]['created_at'] = row[2]
+        result[row[0]]['updated_at'] = row[3]
+        result[row[0]]['policies'] = {}
+      end
+
+      # Add Policy
+      if result[row[0]]['policies'][row[5]] == nil
+        # Add first country
+        result[row[0]]['policies'][row[5]] = [row[4]]
+      else
+        # Add subsequent country
+        result[row[0]]['policies'][row[5]] << row[4]
+      end
+    end
+    result.values
+  end
   def policy_for_country country
     VideoPolicy.fetch self.id, country
+  end
+  def self.available country
+    Video.includes(:video_policies).where('video_policies.country = ? AND video_policies.policy_id != ?', country, BlockPolicy.id)
   end
 
   # Caching

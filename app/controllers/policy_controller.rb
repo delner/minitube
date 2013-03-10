@@ -5,11 +5,11 @@ class PolicyController < ApplicationController
   def index
     # I want to page cache this, but Rails isn't playing nicely with JSON output...
     # Use Memcached for now instead.
-    policies = VideoPolicy.all
+    videos = Video.all_with_policies
     respond_to do |format|
       format.html
       format.json{
-        render :json => policies.to_json
+        render :json => videos.to_json
       }
     end
   end
@@ -17,11 +17,11 @@ class PolicyController < ApplicationController
   def available
     # I want to page cache this, but Rails isn't playing nicely with JSON output...
     # Use Memcached for now instead.
-    policies = VideoPolicy.available_in_country(params[:country])
+    videos = Video.available(params[:country])
     respond_to do |format|
       format.html
       format.json{
-        render :json => policies.to_json
+        render :json => videos.to_json
       }
     end
   end

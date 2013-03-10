@@ -16,7 +16,6 @@ class VideoPolicy < ActiveRecord::Base
   def self.by_country_and_policy country, policy
     VideoPolicy.where(:country => country, :policy_id => policy.id).to_a
   end
-
   def self.available_in_country country
     VideoPolicy.where('country = ? AND policy_id != ?', country, BlockPolicy.id).to_a
   end
